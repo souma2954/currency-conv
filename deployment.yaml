@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  generation: 1
+  labels:
+    app: currency-conv
+  name: currency-conv
+  namespace: default
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: currency-conv
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: currency-conv
+    spec:
+      containers:
+      - image: souma2954/mcv1-currency-conv:v3
+        imagePullPolicy: IfNotPresent
+        name: mcv1-currency-conv
+        env:
+          - name: CURRENCY_EXCH
+            value: http://currency-exch:9000
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-02-09T03:40:33Z"
+    lastUpdateTime: "2026-02-09T03:40:33Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-02-09T03:40:25Z"
+    lastUpdateTime: "2026-02-09T03:40:33Z"
+    message: ReplicaSet "currency-conv-787d45774f" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":true}'
+  labels:
+    app: currency-conv
+  name: currency-conv
+  namespace: default
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 34.118.225.224
+  clusterIPs:
+  - 34.118.225.224
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 32079
+    port: 8000
+    protocol: TCP
+    targetPort: 8000
+  selector:
+    app: currency-conv
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 34.135.162.25
+      ipMode: VIP

@@ -56,7 +56,7 @@ public class CurrencyConversionController {
 
 		String id = from+randomInt+to;
 		ConversionModel model = new ConversionModel(id, from, to, Integer.parseInt(quantity), conversionRate, totalAmount);
-		producer.createMessage(model);
+		//producer.createMessage(model);
 		
 		myLogger.info("Message created in Kafka");
 		
