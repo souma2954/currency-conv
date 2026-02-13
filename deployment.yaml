@@ -7,10 +7,10 @@ metadata:
   labels:
     app: currency-conv
   name: currency-conv
-  namespace: default
+  namespace: kafka
 spec:
   progressDeadlineSeconds: 600
-  replicas: 3
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
@@ -26,7 +26,7 @@ spec:
         app: currency-conv
     spec:
       containers:
-      - image: souma2954/mcv1-currency-conv:v3
+      - image: souma2954/mcv1-currency-conv:v4
         imagePullPolicy: IfNotPresent
         name: mcv1-currency-conv
         env:
@@ -71,7 +71,7 @@ metadata:
   labels:
     app: currency-conv
   name: currency-conv
-  namespace: default
+  namespace: kafka
 spec:
   allocateLoadBalancerNodePorts: true
   clusterIP: 34.118.225.224

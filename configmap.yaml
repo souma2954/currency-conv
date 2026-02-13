@@ -2,11 +2,12 @@ apiVersion: v1
 items:
 - apiVersion: v1
   data:
-    messages: Hello Hyderabad  
+    messages: Hello Hyderabad
+    SPRING_KAFKA_BOOTSTRAP_SERVERS: my-cluster-kafka-bootstrap:9092
   kind: ConfigMap
   metadata:
     name: currency-conv
-    namespace: default
+    namespace: kafka
 kind: List
 metadata:
   resourceVersion: ""

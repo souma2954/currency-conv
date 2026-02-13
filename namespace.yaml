@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kafka
+
+  
+  
+## kubectl apply -f namespace.yaml
+## kubectl apply -f https://strimzi.io/install/latest?namespace=kafka -n kafka    
+
+##kubectl get pods -n kafka
+#kubectl get kafka -n kafka
+#kubectl describe kafka my-cluster -n kafka
+#kubectl logs deployment/strimzi-cluster-operator -n kafka
+#kubectl delete kafka my-cluster -n kafka
+
+#kubectl delete -f https://strimzi.io/install/latest?namespace=kafka -n kafka
+#kubectl get pods -n kafka
+
+#kubectl delete namespace kafka
+
